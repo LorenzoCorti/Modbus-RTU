@@ -21,54 +21,58 @@ to test the communication I set these parameters in the inverter:
 In QT after creating the InverterDriver class I used this function to initialize the modbus communication and test the read command and write command.
 in this case I read three registers starting from address 1003.
 The write command instead provides for the inverter to run.
-In the main.cpp i create:
-InverterDriver * mb_ = new InverterDriver();
-
 
     void InverterDriver::modbusTest( void )
     {
+        mb_ = modbus_new_rtu("/dev/ttyUSB0", 19200, 'N', 8, 2);
+        if( mb_ == NULL )
+        {
+            retval = -1;
+            qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_new_rtu";
+            return retval;
+        }    
 
-      if (!mb_) {
-        qDebug()<<"Modbus not start";
-        exit(1);
-      }
+        if (!mb_) {
+            qDebug()<<"Modbus not start";
+            exit(1);
+        }
 
-      if( modbus_set_slave(mb_, 1) != 0 )
-      {
-        qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_set_slave";
-        modbus_close(mb_);
-        modbus_free(mb_);
-      }
-      if (modbus_connect(mb_) == -1) 
-      {
-        qDebug()<<"Modbus not start";
-        modbus_close(mb_);
-        modbus_free(mb_);
-        exit(1);
-      }
-      uint16_t tab_reg[32];
-      qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
-      if( modbus_read_registers(mb_, 1003, 3, tab_reg)  == -1 )
-      {
-        fprintf(stderr, "%s\n", modbus_strerror(errno));
-        qDebug()<<"not read";
-      }
-      qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
+        if( modbus_set_slave(mb_, 1) != 0 )
+        {
+            qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_set_slave";
+            modbus_close(mb_);
+            modbus_free(mb_);
+        }
+        if (modbus_connect(mb_) == -1) 
+        {
+            qDebug()<<"Modbus not start";
+            modbus_close(mb_);
+            modbus_free(mb_);
+            exit(1);
+        }
+        uint16_t tab_reg[32];
+        qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
+        if( modbus_read_registers(mb_, 1003, 3, tab_reg)  == -1 )
+        {
+            fprintf(stderr, "%s\n", modbus_strerror(errno));
+            qDebug()<<"not read";
+        }
+        qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
 
-      //set frequency to 60Hz
-      uint16_t data = 6000;
-      if( modbus_write_registers( mb_, 13, 1, &data); )
-      {
-        fprintf(stderr, "%s\n", modbus_strerror(errno));
-        qDebug()<<"not write";
-      }
-      //RUN command
-      data = = 1 << 1;    //set the forward bit
-      if( modbus_write_registers( mb_, 8, 1, &data); )
-      {
-        fprintf(stderr, "%s\n", modbus_strerror(errno));
-        qDebug()<<"not write";
-      }
+        //set frequency to 60Hz
+        uint16_t data = 6000;
+        if( modbus_write_registers( mb_, 13, 1, &data); )
+        {
+            fprintf(stderr, "%s\n", modbus_strerror(errno));
+            qDebug()<<"not write";
+        }
+        //RUN command
+        data = = 1 << 1;    //set the forward bit
+        if( modbus_write_registers( mb_, 8, 1, &data); )
+        {
+            fprintf(stderr, "%s\n", modbus_strerror(errno));
+            qDebug()<<"not write";
+        }
     }
     
     
