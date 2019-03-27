@@ -36,17 +36,17 @@ The write command instead provides for the inverter to run
         qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_set_slave";
         modbus_close(mb_);
         modbus_free(mb_);
-     }
-     if (modbus_connect(mb_) == -1) 
-     {
-         qDebug()<<"Modbus not start";
-         modbus_close(mb_);
-         modbus_free(mb_);
-         exit(1);
-     }
-     uint16_t tab_reg[32];
-     qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
-     if( modbus_read_registers(mb_, 1003, 3, tab_reg)  == -1 )
+      }
+      if (modbus_connect(mb_) == -1) 
+      {
+        qDebug()<<"Modbus not start";
+        modbus_close(mb_);
+        modbus_free(mb_);
+        exit(1);
+      }
+      uint16_t tab_reg[32];
+      qDebug()<<"Lettura modbus:"<<tab_reg[0]<<tab_reg[1]<<tab_reg[2]<<tab_reg[3]<<tab_reg[4];
+      if( modbus_read_registers(mb_, 1003, 3, tab_reg)  == -1 )
       {
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         qDebug()<<"not read";
