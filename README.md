@@ -57,14 +57,14 @@ InverterDriver * mb_ = new InverterDriver();
 
       //set frequency to 60Hz
       uint16_t data = 6000;
-      if( modbus_write_registers( mb_, 13, 1, data); )
+      if( modbus_write_registers( mb_, 13, 1, &data); )
       {
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         qDebug()<<"not write";
       }
       //RUN command
       data = = 1 << 1;    //set the forward bit
-      if( modbus_write_registers( mb_, 8, 1, data); )
+      if( modbus_write_registers( mb_, 8, 1, &data); )
       {
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         qDebug()<<"not write";
