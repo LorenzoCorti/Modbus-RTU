@@ -32,11 +32,6 @@ The write command instead provides for the inverter to run.
             return retval;
         }    
 
-        if (!mb_) {
-            qDebug()<<"Modbus not start";
-            exit(1);
-        }
-
         if( modbus_set_slave(mb_, 1) != 0 )
         {
             qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_set_slave";
