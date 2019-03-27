@@ -21,6 +21,8 @@ to test the communication I set these parameters in the inverter:
 In QT after creating the InverterDriver class I used this function to initialize the modbus communication and test the read command and write command.
 in this case I read three registers starting from address 1003.
 The write command instead provides for the inverter to run
+In the main.cpp i create:
+InverterDriver * mb_ = new InverterDriver();
 
 
     void InverterDriver::modbusTest( void )
