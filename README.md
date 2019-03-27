@@ -1,2 +1,2 @@
-Piccola guida per testare la comunicazione modbus con un inverter Mitsubishi con libreria modbus.
-The libmodbus documentation was written by Stéphane Raimbault  https://github.com/stephane/libmodbus
+Small guide to test modbus communication with a Mitsubishi inverter with modbus library.
+The libmodbus documentation was written by Stéphane Raimbault https://github.com/stephane/libmodbus
