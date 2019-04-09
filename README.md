@@ -24,15 +24,15 @@ The write command instead provides for the inverter to run.
 
     void InverterDriver::modbusTest( void )
     {
-        mb_ = modbus_new_rtu("/dev/ttyUSB0", 19200, 'N', 8, 2);
-        if( mb_ == NULL )
-        {
-            retval = -1;
-            qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_new_rtu";
-            return retval;
-        }  
+       mb_ = modbus_new_rtu("/dev/ttyUSB0", 19200, 'N', 8, 2);
+       if( mb_ == NULL )
+       {
+           retval = -1;
+           qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_new_rtu";
+           return retval;
+       }  
         
-        timeval t;
+       timeval t;
        t.tv_sec = 0;
        t.tv_usec = 100;
        modbus_set_response_timeout( mb_, &t );
