@@ -30,8 +30,13 @@ The write command instead provides for the inverter to run.
             retval = -1;
             qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_new_rtu";
             return retval;
-        }    
-
+        }  
+        
+        timeval t;
+       t.tv_sec = 0;
+       t.tv_usec = 100;
+       modbus_set_response_timeout( mb_, &t );
+       
         if( modbus_set_slave(mb_, 1) != 0 )
         {
             qDebug()<<__PRETTY_FUNCTION__<< "failed: modbus_set_slave";
